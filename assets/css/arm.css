@@ -1,0 +1,75 @@
+/* ===================================================================
+   ROBOT ARM — tab, panel, LCD, slider (melengkapi style.css)
+   =================================================================== */
+.vtabs { display: flex; gap: 10px; }
+.vtab {
+    position: relative; cursor: pointer; border: 0; background: #0a1030; color: var(--dim);
+    font: 9px var(--f-px); padding: 11px 14px; letter-spacing: .5px;
+    box-shadow: inset -3px -3px 0 #0006, inset 3px 3px 0 #ffffff14, 0 0 0 3px var(--line);
+    transition: transform .08s steps(2), background .15s steps(3), color .15s;
+}
+.vtab span { font-family: var(--f-body); font-size: 18px; margin-right: 4px; vertical-align: -2px; }
+.vtab:hover { color: #fff; transform: translateY(-2px); }
+.vtab.active { background: var(--panel-hi); color: var(--yellow); box-shadow: inset -3px -3px 0 #0006, inset 3px 3px 0 #ffffff22, 0 0 0 3px var(--yellow); }
+.vtab:focus-visible { outline: 4px dashed var(--yellow); outline-offset: 4px; }
+
+.app.view-cnc .arm-only, .app.view-arm .cnc-only { display: none !important; }
+.app.view-arm .stage.arm-only { display: flex; }
+.app.view-arm .col.arm-only { display: flex; }
+.app.view-arm .col.left.arm-only { grid-area: left; } .app.view-arm .col.right.arm-only { grid-area: right; } .app.view-arm .stage.arm-only { grid-area: stage; }
+
+#arm3d { position: absolute; inset: 0; width: 100%; height: 100%; display: block; image-rendering: pixelated; image-rendering: crisp-edges; cursor: grab; touch-action: none; }
+#arm3d:active { cursor: grabbing; }
+
+/* kartu mode */
+#aCardMode[data-state="idle"] .big span { color: var(--cyan); }  #aCardMode[data-state="idle"] .sprite i { background: var(--cyan); animation-duration: 2s; }
+#aCardMode[data-state="auto"] .big span { color: var(--green); } #aCardMode[data-state="auto"] .sprite i { background: var(--green); animation-duration: .4s; }
+#aCardMode[data-state="app"] .big span { color: var(--yellow); } #aCardMode[data-state="app"] .sprite i { background: var(--yellow); animation-duration: .8s; }
+#aCardMode[data-state="memory"] .big span { color: var(--purple); } #aCardMode[data-state="memory"] .sprite i { background: var(--purple); animation-duration: .3s; }
+#aCardMode[data-state="off"] .big span { color: #6f7bb5; } #aCardMode[data-state="off"] .sprite i { background: #4a5170; animation: none; }
+
+/* posisi servo */
+.axes { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.axes li { display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 0 8px; }
+.axes li span { font: 8px var(--f-px); color: var(--dim); }
+.axes li b { font: 12px var(--f-px); color: var(--yellow); font-weight: normal; }
+.axes li .meter { grid-column: 1 / -1; margin-top: 4px; height: 12px; }
+.axes li:nth-child(2) .meter i { background: repeating-linear-gradient(90deg, var(--green) 0 8px, transparent 8px 10px); }
+.axes li:nth-child(3) .meter i { background: repeating-linear-gradient(90deg, var(--orange) 0 8px, transparent 8px 10px); }
+.axes li:nth-child(4) .meter i { background: repeating-linear-gradient(90deg, var(--purple) 0 8px, transparent 8px 10px); }
+
+/* LCD 16x2 */
+.lcd { background: #3f8a3a; border: 4px solid #0a1a0a; padding: 10px 14px; font: 26px/1.25 'VT', 'Courier New', monospace; color: #0b2a0b; letter-spacing: 3px; box-shadow: inset 0 0 0 3px #5fb256, inset 0 0 22px #1b4d1b; text-shadow: 1px 1px 0 #7ed070aa; white-space: pre; overflow: hidden; }
+.lcd div { height: 1.25em; }
+.lcd.off { background: #1a2a1a; color: #1d3a1d; text-shadow: none; box-shadow: inset 0 0 0 3px #223622; }
+
+/* slider */
+.sliders { display: grid; gap: 12px; margin: 4px 2px 8px; }
+.sliders label { display: grid; grid-template-columns: 78px 1fr 44px; gap: 8px; align-items: center; }
+.sliders label span { font: 7px var(--f-px); color: var(--dim); }
+.sliders label b { font: 10px var(--f-px); color: var(--yellow); font-weight: normal; text-align: right; }
+.sliders input[type=range] { -webkit-appearance: none; appearance: none; width: 100%; height: 18px; background: transparent; cursor: pointer; margin: 0; }
+.sliders input[type=range]::-webkit-slider-runnable-track { height: 12px; background: #000; border: 3px solid var(--edge); }
+.sliders input[type=range]::-moz-range-track { height: 6px; background: #000; border: 3px solid var(--edge); }
+.sliders input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 22px; margin-top: -7px; background: var(--yellow); border: 3px solid #000; box-shadow: inset -3px -3px 0 #0004, inset 3px 3px 0 #fff6; }
+.sliders input[type=range]::-moz-range-thumb { width: 12px; height: 18px; background: var(--yellow); border: 3px solid #000; border-radius: 0; }
+.sliders input[type=range]:focus-visible { outline: 3px dashed var(--yellow); outline-offset: 3px; }
+.sliders input[type=range]:disabled { cursor: not-allowed; opacity: .4; filter: grayscale(.8); }
+.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 6px 4px 4px; }
+
+#aWaiting small { font: 16px var(--f-body); color: var(--dim); }
+#aSync.stale { color: var(--orange); }
+#aSync.stale .bar i { background: repeating-linear-gradient(90deg, var(--orange) 0 6px, transparent 6px 8px); }
+#aSync.is-waiting .sync-ico { animation: hourFlip 1.6s steps(1) infinite; }
+#aSync .bar { width: 90px; }
+.app.view-arm .log-card { min-height: 200px; }
+#aLog { max-height: 220px; }
+#aLog li .t-mode { color: var(--green); } #aLog li .t-pos { color: var(--cyan); }
+
+@media (max-width: 1180px) {
+    .app.view-arm .col.arm-only.left { display: grid; grid-template-columns: 1fr 1fr; align-content: start; }
+}
+@media (max-width: 720px) {
+    .vtabs { order: 3; width: 100%; justify-content: center; }
+    .lcd { font-size: 20px; letter-spacing: 1px; }
+}
